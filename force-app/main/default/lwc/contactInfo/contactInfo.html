@@ -1,0 +1,176 @@
+<template>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_2-of-3">
+            <!-- toggle between edit mode and view mode -->
+            <template lwc:if={toggleViewAndEdit}>
+                <lightning-record-edit-form record-id={contactId} object-api-name={objectApiName}>
+                    <div class="slds-grid">
+
+                        <!-- Details of record in view only mode. -->
+                        <div class="slds-col slds-size_1-of-2">
+
+                            <div class="slds-grid  slds-p-left_xx-small">
+                                <lightning-output-field field-name="Name"
+                                    class="slds-col slds-size_7-of-12"></lightning-output-field>
+                                <lightning-icon icon-name="utility:edit" size="xx-small" onclick={toggleView}
+                                    alternative-text="edit" class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                </lightning-icon>
+                            </div>
+
+                            <div class="slds-grid  slds-p-left_xx-small">
+                                <lightning-output-field field-name="Email"
+                                    class="slds-col slds-size_7-of-12"></lightning-output-field>
+                                <lightning-icon icon-name="utility:edit" size="xx-small" onclick={toggleView}
+                                    alternative-text="edit" class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                </lightning-icon>
+                            </div>
+
+                            <div class="slds-grid  slds-p-left_xx-small">
+                                <lightning-output-field field-name="Monthly_Mileage__c"
+                                    class="slds-col slds-size_7-of-12"></lightning-output-field>
+                                <lightning-icon icon-name="utility:edit" size="xx-small" onclick={toggleView}
+                                    alternative-text="edit" class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                </lightning-icon>
+                            </div>
+                            <div class="slds-grid  slds-p-left_xx-small">
+                                <lightning-output-field field-name="Standard_Vehicle__c"
+                                    class="slds-col slds-size_7-of-12"></lightning-output-field>
+                                <lightning-icon icon-name="utility:edit" size="xx-small" onclick={toggleView}
+                                    alternative-text="edit" class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                </lightning-icon>
+                            </div>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <div class="slds-grid  slds-p-left_xx-small">
+                                <lightning-output-field field-name="Phone"
+                                    class="slds-col slds-size_7-of-12"></lightning-output-field>
+                                <lightning-icon icon-name="utility:edit" size="xx-small" onclick={toggleView}
+                                    alternative-text="edit" class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                </lightning-icon>
+                            </div>
+                            <div class="slds-grid  slds-p-left_xx-small">
+                                <lightning-output-field field-name="Department"
+                                    class="slds-col slds-size_7-of-12"></lightning-output-field>
+                                <lightning-icon icon-name="utility:edit" size="xx-small" onclick={toggleView}
+                                    alternative-text="edit" class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                </lightning-icon>
+                            </div>
+                            <template lwc:if={addressCombination}>
+                                <div class="slds-grid  slds-p-left_xx-small">
+                                    <span class="slds-col slds-size_7-of-12">Address</span>
+                                    <lightning-icon icon-name="utility:edit" size="xx-small" onclick={toggleView}
+                                        alternative-text="edit" class="slds-col slds-size_3-of-12 slds-p-top_x-small">
+                                    </lightning-icon>
+                                </div>
+                                <span class="slds-p-left_medium">{addressCombination}</span>
+                            </template>
+                            <div class="slds-grid  slds-p-left_xx-small slds-p-top_small">
+                                <lightning-output-field field-name="Role__c"
+                                    class="slds-col slds-size_7-of-12"></lightning-output-field>
+                                <lightning-icon icon-name="utility:edit" size="xx-small" onclick={toggleView}
+                                    alternative-text="edit" class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                </lightning-icon>
+                            </div>
+                        </div>
+                    </div>
+                </lightning-record-edit-form>
+            </template>
+            <template lwc:else>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_2-of-3">
+
+                        <!-- layout for edit page of record -->
+                        <lightning-record-edit-form record-id={contactId} object-api-name={objectApiName}
+                            onsuccess={handleSuccess} onerror={handleError}>
+                            <div class="slds-grid">
+                                <div class="slds-col slds-size_3-of-4">
+                                    <lightning-input-field field-name="Name"></lightning-input-field>
+                                    <lightning-input-field field-name="Email"></lightning-input-field>
+                                    <lightning-input-field field-name="Monthly_Mileage__c"></lightning-input-field>
+                                    <lightning-input-field field-name="Standard_Vehicle__c"></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_3-of-4">
+                                    <lightning-input-field field-name="Phone"></lightning-input-field>
+                                    <lightning-input-field field-name="Department"></lightning-input-field>
+                                    <lightning-input-field field-name="MailingCity"></lightning-input-field>
+                                    <lightning-input-field field-name="MailingState"></lightning-input-field>
+                                    <lightning-input-field field-name="MailingPostalCode"></lightning-input-field>
+                                    <lightning-input-field field-name="Role__c"></lightning-input-field>
+                                </div>
+                            </div>
+                            <div class="cnl-btn sbt-btn">
+                                <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update"
+                                    label="Update">
+                                </lightning-button>
+                                <lightning-button variant="brand-outline" label="Cancel" title="Cancel"
+                                    onclick={toggleView}
+                                    class="slds-m-left_x-small slds-m-top_small"></lightning-button>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- right side component to display imaage and location details of contact object  -->
+        <div class="slds-col slds-size_1-of-3" style="color: rgb(103, 103, 116); border: 1px solid; width:28%;">
+            <lightning-card style="margin-top:-40px;">
+                <lightning-record-edit-form record-id={contactId} object-api-name={objectApiName} onsuccess={handleSuccess}>
+                    <lightning-output-field field-name="Standard_Vehicle__c"></lightning-output-field>
+                    <lightning-output-field field-name="Car_Image__c"></lightning-output-field>
+                    <template lwc:if={editRightSection}>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <lightning-input-field field-name="MailingCity"></lightning-input-field>
+                            </div>
+                            <div class="slds-col">
+                                <lightning-input-field field-name="MailingState"></lightning-input-field>
+                            </div>
+                        </div>
+                        <lightning-input-field field-name="MailingPostalCode"></lightning-input-field>
+                        <div class="cnl-btn sbt-btn">
+                            <lightning-button class="slds-m-top_small" variant="brand" type="submit" name="update"
+                                label="Update">
+                            </lightning-button>
+                            <lightning-button variant="brand-outline" label="Cancel" title="Cancel"
+                                onclick={toggleRightSectionView}
+                                class="slds-m-left_x-small slds-m-top_small"></lightning-button>
+                        </div>
+                    </template>
+                    <template lwc:else>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <div class="slds-grid">
+                                    <lightning-output-field field-name="MailingCity"
+                                        class="slds-col slds-size_9-of-12"></lightning-output-field>
+                                    <lightning-icon icon-name="utility:edit" size="xx-small"
+                                        onclick={toggleRightSectionView} alternative-text="edit"
+                                        class="slds-col slds-size_3-of-12 slds-p-top_small"> </lightning-icon>
+                                </div>
+                            </div>
+                            <div class="slds-col">
+                                <div class="slds-grid">
+                                    <lightning-output-field field-name="MailingState"
+                                        class="slds-col slds-size_9-of-12"></lightning-output-field>
+                                    <lightning-icon icon-name="utility:edit" size="xx-small"
+                                        onclick={toggleRightSectionView} alternative-text="edit"
+                                        class="slds-col slds-size_3-of-12 slds-p-top_small"> </lightning-icon>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-grid slds-size_8-of-12">
+                                <lightning-output-field field-name="MailingPostalCode"
+                                    class="slds-col slds-size_7-of-12"></lightning-output-field>
+                                <lightning-icon icon-name="utility:edit" size="xx-small"
+                                    onclick={toggleRightSectionView} alternative-text="edit"
+                                    class="slds-col slds-size_3-of-12 slds-p-top_small">
+                                </lightning-icon>
+                            </div>
+                        </div>
+                    </template>
+                </lightning-record-edit-form>
+            </lightning-card>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,12 @@
+.sbt-btn{
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 50%;
+}
+
+img {
+    max-width: 100%;
+    height: 300px;
+}

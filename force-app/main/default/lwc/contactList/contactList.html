@@ -1,0 +1,51 @@
+<template>
+    <div class="slds-card__body_inner" style="height: 500px ; overflow-y: scroll">
+        <template if:true={contacts}>
+            <table class="slds-table slds-table_fixed-layout slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Name">Name</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Phone">Phone</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Email">Email</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Postal Code">Postal Code</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={contacts} for:item="c">
+                        <tr class="slds-hint-parent" key={c.Id}>
+                            <th scope="row" class="slds-truncate">
+                                <a onclick={showContact} data-id={c.Id} target="_blank">{c.Name}</a>
+                            </th>
+                            <td>
+                                <div class="slds-truncate" title={c.Phone}>
+                                    <lightning-formatted-phone value={c.Phone}></lightning-formatted-phone>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title={c.Email}>
+                                    <lightning-formatted-email value={c.Email}></lightning-formatted-email>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title={c.MailingPostalCode}>
+                                    <lightning-formatted-text value={c.MailingPostalCode}></lightning-formatted-text>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </template>
+    </div>
+    <div class="slds-m-top_small">
+        <!-- <c-contact-detail-component contact-id = {contactId} ></c-contact-detail-component> -->
+    </div>
+</template>

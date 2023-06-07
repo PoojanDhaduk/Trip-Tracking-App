@@ -1,0 +1,27 @@
+.displaynone{
+    display: none;
+}
+
+.pagination {
+    padding-top: 20px;
+    display:flex;
+    justify-content: center;
+  }
+  
+  .pagination a {
+    color: #000000;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .5s;
+    border: 1px solid #DDD;
+    margin: 0 4px;
+    font-size: 15px;
+  }
+  
+  .pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .pagination a:hover:not(.active) {background-color: #DDD;}

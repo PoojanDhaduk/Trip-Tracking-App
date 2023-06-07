@@ -1,0 +1,27 @@
+<template>
+    <div class="slds-m-around_large">
+        <lightning-record-view-form record-id={tripId} object-api-name="Trip__c">
+            <div class="slds-grid">
+                <div class="slds-grid slds-col slds-size_3-of-5">
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Name"></lightning-output-field>
+                        <lightning-output-field field-name="Trip_Date__c"></lightning-output-field>
+                        <lightning-output-field field-name="Mileages__c"></lightning-output-field>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <lightning-output-field field-name="Trip_Origin__c"></lightning-output-field>
+                        <lightning-output-field field-name="Trip_Destination__c"></lightning-output-field>
+                        <lightning-output-field field-name="Tags__c"></lightning-output-field>
+                        <lightning-output-field field-name="Notes__c"></lightning-output-field>
+                    </div>
+                </div>
+                <div class="slds-grid slds-col slds-size_2-of-5">
+                    <c-map-for-trips trip-id={tripId} ></c-map-for-trips>
+                </div>
+            </div>
+        </lightning-record-view-form>
+    </div>
+    <div class="slds-m-bottom_medium">
+        <lightning-button variant="destructive" class="slds-align_absolute-center" label="Close" title="Close" onclick={handleClose}></lightning-button>
+    </div>
+</template>

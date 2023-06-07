@@ -1,0 +1,25 @@
+<template>
+    <template lwc:if={contactId}>
+        <lightning-card>
+            <h3 slot="title" class="titleFont">{contactName}</h3>
+                <lightning-button class="slds-m-top_x-small" variant="brand" label="Add Trip" slot="actions" icon-name="utility:add" onclick={openTripTab} ></lightning-button>
+            <template lwc:if={contactId}>
+                <lightning-tabset active-tab-value={activeTab} >
+                    
+                    <lightning-tab label="Details" value="1">
+                        <c-contact-info contact-id={contactId}></c-contact-info>
+                    </lightning-tab>
+
+                    <lightning-tab label={tabLabel2} title="2nd tab extended title" value="2">
+                        <c-contact-trips contact-id={contactId}></c-contact-trips>
+                    </lightning-tab>    
+
+                    <lightning-tab label={tabLabel3} style="padding: 0px;" value="3" onactive={handleActive}>
+                        <c-contact-locations contact-id={contactId}></c-contact-locations>
+                    </lightning-tab>
+
+                </lightning-tabset>
+            </template>
+        </lightning-card>
+    </template>
+</template>

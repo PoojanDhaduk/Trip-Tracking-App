@@ -1,0 +1,119 @@
+<template>
+    <div class="slds-m-around_x-small">
+        <table class="slds-table slds-table_fixed-layout slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset">
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="TripDate">Trip Date</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Origin">Origin</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Destination">Destination</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Mileage">Mileage</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Notes">Notes</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Tags">Tags</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="6">
+                        <template lwc:if={createNewTrip}>
+                            <lightning-card>
+                                <c-create-trip-component contact-id={contactId} ontripcreation={refreshTripData}
+                                    oncancelnewtrip={handlCancel}></c-create-trip-component>
+                            </lightning-card>
+                        </template>
+                        <template lwc:else>
+                            <div class="slds-m-around_xx-small">
+                                <lightning-button variant="brand" label="Create Trip" title="Create Trip"
+                                    icon-name="action:add_relationship"
+                                    onclick={toggleCreateComponent}>{contactId}</lightning-button>
+                            </div>
+                        </template>
+                    </td>
+                </tr>
+                <!-- related trip's information in table  -->
+                <template lwc:if={showdata}>
+                    <template for:each={tripData} for:item="trip">
+                        <tr class="slds-hint-parent" key={trip.Id} onclick={showData} style="cursor: pointer;">
+                            <td data-text={trip.Id}>
+                                <div class="slds-truncate" title={trip.Trip_Date__c} data-text={trip.Id}>
+                                    <lightning-formatted-text value={trip.Trip_Date__c}
+                                        data-text={trip.Id}></lightning-formatted-text>
+                                </div>
+                            </td>
+                            <td data-text={trip.Id}>
+                                <div class="slds-truncate" title={trip.Trip_Origin__r.Name} data-text={trip.Id}>
+                                    <lightning-formatted-text value={trip.Trip_Origin__r.Name}
+                                        data-text={trip.Id}></lightning-formatted-text>
+                                </div>
+                            </td>
+                            <td data-text={trip.Id}>
+                                <div class="slds-truncate" title={trip.Trip_Destination__r.Name} data-text={trip.Id}>
+                                    <lightning-formatted-text value={trip.Trip_Destination__r.Name}
+                                        data-text={trip.Id}></lightning-formatted-text>
+                                </div>
+                            </td>
+                            <td data-text={trip.Id}>
+                                <div class="slds-truncate" title={trip.Mileages__c} data-text={trip.Id}>
+                                    <lightning-formatted-number value={trip.Mileages__c}
+                                        data-text={trip.Id}></lightning-formatted-number>
+                                </div>
+                            </td>
+                            <td data-text={trip.Id}>
+                                <div class="slds-truncate" title={trip.Notes__c} data-text={trip.Id}>
+                                    <lightning-formatted-text value={trip.Notes__c}
+                                        data-text={trip.Id}></lightning-formatted-text>
+                                </div>
+                            </td>
+                            <td data-text={trip.Id}>
+                                <div class="slds-truncate" title={trip.Tags__c} data-text={trip.Id}>
+                                    <lightning-formatted-text value={trip.Tags__c}
+                                        data-text={trip.Id}></lightning-formatted-text>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr key={trip.Id}>
+                            <td colspan="6" data-id={trip.Id} style="display: none;">
+                                <div>
+                                    <c-view-trip-component trip-id={trip.Id} onclosetrip={closeViewTripComponent}></c-view-trip-component>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </template>
+                <!-- when no trip is available this data will show up  -->
+                <template lwc:else>
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+
+        <!-- pagination system  -->
+        <template lwc:if={showdata}>
+            <div class="pagination">
+                <a onclick={decreasePageNumber}>&laquo;</a>
+                <template for:each={pageNumbers} for:item="pageNumber">
+                    <a key={pageNumber} data-id={pageNumber} onclick={changePageNumber} class={} >{pageNumber} </a>
+                </template>
+                <a onclick={increasePageNumber}>&raquo;</a>
+            </div>
+        </template>
+    </div>
+</template>

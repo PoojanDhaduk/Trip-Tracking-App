@@ -1,0 +1,58 @@
+<template>
+    <div class="slds-m-around_small">
+        <table class="slds-table slds-table_fixed-layout slds-table_bordered">
+            <thead>
+                <tr class="slds-line-height_reset"> 
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="TripDate">Location Name</div>
+                    </th>
+                    <th class="" scope="col">
+                        <div class="slds-truncate" title="Origin">Address</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <template lwc:if={showData}>
+                    <template for:each={pageWiseData} for:item="location">
+                        <tr class="slds-hint-parent" key={location.Id}>
+                            <td>
+                                <div class="slds-truncate" title=Name>
+                                    <lightning-formatted-text value={location.Name}></lightning-formatted-text>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="slds-truncate" title=Name>
+                                    <lightning-formatted-text value={location.Address}></lightning-formatted-text>
+                                </div>
+                            </td>
+                        </tr>
+                    </template>
+                </template>
+                <template lwc:else>
+                    <tr>
+                        <b>No Locations are available</b>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+    <template lwc:if={showPagination}>
+        <div class="pagination slds-m-bottom_small" >
+            <a onclick={decreasePageNumber}>&laquo;</a>
+            <template for:each={pageNumbers} for:item="pageNumber">
+                <a key={pageNumber} data-id={pageNumber} onclick={changePageNumber} class={} >{pageNumber} </a>
+            </template>
+            <a onclick={increasePageNumber}>&raquo;</a>
+        </div>
+    </template>
+
+    <!-- lightning button to open modal for creating new location  -->
+    <lightning-button label="Add Location" onclick={openModal} class="slds-align_absolute-center"
+        variant="brand"></lightning-button>
+
+    <template if:true={isAddModalOpen}>
+        <c-location-modal is-add-modal-open={isAddModalOpen} onclosemodal={closeModal} contact-id={contactId}
+            onlocationcreation={handleCreateRecord}></c-location-modal>
+    </template>
+</template>

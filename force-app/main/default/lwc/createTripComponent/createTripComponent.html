@@ -1,0 +1,51 @@
+<template>
+    <div class="slds-grid slds-gutters">
+        <div class="slds-col slds-size_1-of-3">
+                <lightning-record-form object-api-name="Trip__c" fields={fields} columns="1" onsubmit={handleSubmit} mode="edit"
+                    onsuccess={handleSuccess} oncancel={handleCancel} >
+                    <lightning-button variant="brand" label="labelName" title="titleName" onclick={handleSubmit}></lightning-button>
+                </lightning-record-form>
+        </div>
+        <div class="slds-col slds-size_1-of-3">
+            <div class="slds-m-top_xxxx-small">
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_10-of-12">
+                        <c-location-look-up onselectedrecord={getOriginId} label="Trip Origin" is-value-selected={isOriginSelected} selected-record-name={selectedOriginName}></c-location-look-up>
+                      </div>
+                      <div class="slds-col slds-size_1-of-12"> 
+                            <lightning-icon icon-name="action:edit" alternative-text="Event" title="Event" size="x-small" onclick={openEditOriginModal} class="slds-m-top_large"></lightning-icon>
+                            <template lwc:if={showEditOriginModal}>
+                                <c-location-modal is-edit-modal-open={showEditOriginModal} onlocationupdate={setOriginId} onclosemodal={hideEditOriginModal} contact-id={contactId} location-id={originId}></c-location-modal>
+                            </template>                            
+                      </div>
+                      <div class="slds-col slds-size_1-of-12" >
+                        <lightning-icon icon-name="action:add_relationship" onclick={openAddOriginModal} alternative-text="Event" title="Event"  size="x-small" class="slds-m-top_large"></lightning-icon>
+                        <template lwc:if={showaddOriginModal}>
+                            <c-location-modal is-add-modal-open={showaddOriginModal} onlocationcreation={setOriginId} onclosemodal={hideaddOriginModal} contact-id={contactId} location-id={originId}></c-location-modal>
+                        </template>
+                    </div>
+                </div>
+                <div class="slds-grid slds-gutters slds-m-top_x-small">
+                    <div class="slds-col slds-size_10-of-12">
+                        <c-location-look-up onselectedrecord={getDestinationId} label="Trip Destination" is-value-selected={isDestinationSelected} selected-record-name={selectedDestinationName}></c-location-look-up>
+                      </div>
+                      <div class="slds-col slds-size_1-of-12">
+                        <lightning-icon icon-name="action:edit" alternative-text="Event" title="Event" size="x-small" class="slds-m-top_large" onclick={openEditDestinationModal}></lightning-icon>
+                        <template lwc:if={showEditDestinationModal}>
+                            <c-location-modal is-edit-modal-open={showEditDestinationModal} onlocationupdate={setDestinationId} onclosemodal={hideEditDestinationModal} contact-id={contactId} location-id={destinationId}></c-location-modal>
+                        </template>
+                      </div>
+                      <div class="slds-col slds-size_1-of-12">
+                        <lightning-icon icon-name="action:add_relationship" onclick={openAddDestinationModal} alternative-text="Event" title="Event"  size="x-small" class="slds-m-top_large"></lightning-icon>
+                        <template lwc:if={showaddDestinationModal}>
+                            <c-location-modal is-add-modal-open={showaddDestinationModal} onlocationcreation={setDestinationId} onclosemodal={hideaddDestinationModal} contact-id={contactId} location-id={destinationId}></c-location-modal>
+                        </template>
+                      </div>
+                </div>  
+            </div>
+        </div>
+        <div class="slds-col slds-size_1-of-3">
+            <c-map-for-trips origin-id={originId} destination-id={destinationId}></c-map-for-trips>
+        </div>
+    </div>
+</template>
