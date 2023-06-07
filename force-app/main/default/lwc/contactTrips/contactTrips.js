@@ -40,7 +40,7 @@ export default class ContactTrips extends LightningElement {
     getTripList({ contactId: this.contactId  , pageSize: this.pageSize , pageNumber : this.currentPage})
       .then(data => {
         this.tripData = data;
-        if (data.length == 0) {
+        if (data.length == 0) { 
           this.showdata = false;
         }
         else {
