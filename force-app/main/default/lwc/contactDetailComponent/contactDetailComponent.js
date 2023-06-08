@@ -23,12 +23,18 @@ export default class ContactDetailComponent extends LightningElement  {
       } 
     }
 
+    handleActivefirst(){
+      this.activeTab = '1';
+    }
+
     //functionality to redirect to the trip tab on click of add trip button on the main component
     openTripTab(){
       this.activeTab = '2';
     }
-
-    handleActive(){
+    
+    //render the third component contactLocation to refresh location data
+    handleActivethird(){
+      this.activeTab = '3';
       if(!this.isFirstTimeForLocationTab){
         this.template.querySelector('c-contact-locations').fetchRecords();
       }

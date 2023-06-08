@@ -56,7 +56,6 @@ export default class LocationLookUp extends LightningElement {
             detail: this.selectedRecordId
         });
         this.dispatchEvent(passRecordId);
-        console.log('deselected value');
     }
     
     //to close the search panel when clicked outside of search input

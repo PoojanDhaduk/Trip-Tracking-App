@@ -6,7 +6,7 @@
             <template lwc:if={contactId}>
                 <lightning-tabset active-tab-value={activeTab} >
                     
-                    <lightning-tab label="Details" value="1">
+                    <lightning-tab label="Details" value="1" onactive={handleActivefirst}>
                         <c-contact-info contact-id={contactId}></c-contact-info>
                     </lightning-tab>
 
@@ -14,7 +14,7 @@
                         <c-contact-trips contact-id={contactId}></c-contact-trips>
                     </lightning-tab>    
 
-                    <lightning-tab label={tabLabel3} style="padding: 0px;" value="3" onactive={handleActive}>
+                    <lightning-tab label={tabLabel3} style="padding: 0px;" value="3" onactive={handleActivethird}>
                         <c-contact-locations contact-id={contactId}></c-contact-locations>
                     </lightning-tab>
 

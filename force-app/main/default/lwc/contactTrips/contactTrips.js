@@ -11,6 +11,7 @@ export default class ContactTrips extends LightningElement {
   pageSize = 5;
   pageNumbers;
   totalRecords;
+  totalPages;
   
   //getiing data of trips when the component is inserted into DOM at initial phase.
   connectedCallback(){
@@ -101,6 +102,7 @@ export default class ContactTrips extends LightningElement {
     for (let i = 1; i <= totalPages; i++) {
       this.pageNumbers.push(i);
     }
+    this.totalpages = totalPages;
   }
 
   //chanign page number as per the event listned by system.

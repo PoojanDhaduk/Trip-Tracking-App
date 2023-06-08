@@ -38,6 +38,9 @@
     </div>
 
     <template lwc:if={showPagination}>
+        <div class="pagination slds-m-bottom_small">
+            <b> Page : {currentPage} OF {pageNumbers.length}</b>
+        </div>
         <div class="pagination slds-m-bottom_small" >
             <a onclick={decreasePageNumber}>&laquo;</a>
             <template for:each={pageNumbers} for:item="pageNumber">
@@ -55,4 +58,4 @@
         <c-location-modal is-add-modal-open={isAddModalOpen} onclosemodal={closeModal} contact-id={contactId}
             onlocationcreation={handleCreateRecord}></c-location-modal>
     </template>
-</template>
+</template> 

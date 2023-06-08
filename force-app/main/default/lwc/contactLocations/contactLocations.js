@@ -1,4 +1,4 @@
-import { LightningElement,wire,api ,track} from 'lwc';
+import { LightningElement, wire, api, track } from 'lwc';
 import getRelatedLocations from '@salesforce/apex/LocationHandler.getRelatedLocations';
 
 export default class MyComponent extends LightningElement {
@@ -7,7 +7,7 @@ export default class MyComponent extends LightningElement {
     locationName = '';
     address = {};
     showData = false;
-    showPagination=false;
+    showPagination = false;
     locationData = [];
     pageWiseData = [];
     currentPage = 1;
@@ -15,77 +15,77 @@ export default class MyComponent extends LightningElement {
     pageNumbers = [];
     totalrecords;
 
-    connectedCallback(){
+    connectedCallback() {
         this.fetchRecords();
     }
-    
+
     //fetchRecords function will give all the location records whenever it is called.
-    @api fetchRecords(){
+    @api fetchRecords() {
         getRelatedLocations({ contactId: this.contactId })
-        .then(data => {
-            if(data.length>0){
-                this.showData= true;
-                this.showPagination=true;
-                this.locationData = data;
-                this.totalrecords = this.locationData.length;
-                this.createPageWiseData();
-                this.calculatePageNumbers();
-            }
-            else{
-                this.showData= false;
-            }
-        })
-        .catch(error => {
-            console.log('Error:', error);
-        });
+            .then(data => {
+                if (data.length > 0) {
+                    this.showData = true;
+                    this.showPagination = true;
+                    this.locationData = data;
+                    this.totalrecords = this.locationData.length;
+                    this.createPageWiseData();
+                    this.calculatePageNumbers();
+                }
+                else {
+                    this.showData = false;
+                }
+            })
+            .catch(error => {
+                console.log('Error:', error);
+            });
     }
-    
+
     //logical methods for pagination from here.
-    createPageWiseData(){
-        this.pageWiseData = this.locationData.slice( (this.currentPage-1)*this.pageSize , ((this.currentPage-1)*this.pageSize) + this.pageSize );
+    createPageWiseData() {
+        this.pageWiseData = this.locationData.slice((this.currentPage - 1) * this.pageSize, ((this.currentPage - 1) * this.pageSize) + this.pageSize);
     }
 
     calculatePageNumbers() {
         this.pageNumbers = [];
-        const totalPages = Math.ceil(this.totalrecords/ this.pageSize);
+        const totalPages = Math.ceil(this.totalrecords / this.pageSize);
         for (let i = 1; i <= totalPages; i++) {
-          this.pageNumbers.push(i);
+            this.pageNumbers.push(i);
         }
-      }
-    
+    }
+
     openModal() {
         this.isAddModalOpen = true;
     }
-    
+
     closeModal() {
         this.isAddModalOpen = false;
     }
 
-    handleCreateRecord() {     
+    handleCreateRecord() {
         this.fetchRecords();
     }
 
-    changePageNumber(event){
+    changePageNumber(event) {
         const temp = this.currentPage;
         const clickedElement = event.target;
         this.currentPage = clickedElement.dataset.id;
-        if(temp!=this.currentPage){
+        if (temp != this.currentPage) {
             this.createPageWiseData();
         }
-      }
-      
-      increasePageNumber(){
-        if(this.currentPage< this.pageNumbers.length){
+    }
+
+    increasePageNumber() {
+        if (this.currentPage < this.pageNumbers.length) {
             this.currentPage++;
             this.createPageWiseData();
         }
-      }
-      decreasePageNumber(){
-        if(this.currentPage -1>0){
-          this.currentPage--;
-          this.createPageWiseData();
+    }
+    decreasePageNumber() {
+        if (this.currentPage - 1 > 0) {
+            this.currentPage--;
+            this.createPageWiseData();
         }
-      }
+    }
 }
 
 

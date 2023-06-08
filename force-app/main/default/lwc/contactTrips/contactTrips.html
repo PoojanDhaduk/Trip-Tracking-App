@@ -107,6 +107,9 @@
 
         <!-- pagination system  -->
         <template lwc:if={showdata}>
+            <div class="pagination slds-m-around_small">
+                <b> Page : {currentPage} OF {totalpages}</b>
+            </div>
             <div class="pagination">
                 <a onclick={decreasePageNumber}>&laquo;</a>
                 <template for:each={pageNumbers} for:item="pageNumber">
