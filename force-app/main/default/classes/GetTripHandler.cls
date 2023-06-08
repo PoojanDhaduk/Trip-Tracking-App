@@ -14,10 +14,9 @@ public with sharing class GetTripHandler {
     @AuraEnabled
     public static List<Trip__c> getTripList(String contactId , Integer pageSize , Integer pageNumber){
         try {
-
             Integer offset = (pageNumber - 1) * pageSize;
             List<Trip__c> tripList = [SELECT Name , Trip_Date__c , Trip_Origin__r.Name , Trip_Destination__r.Name , Mileages__c ,Notes__c , Tags__c , Contact__c FROM Trip__c WHERE Contact__c =: contactId  WITH SECURITY_ENFORCED ORDER BY Name ASC LIMIT :pageSize OFFSET :offset];
-            List<AggregateResult> totalTrips = [Select COUNT(NAME) FROM Trip__c WHERE Contact__c =: contactId];
+            List<AggregateResult> totalTrips = [Select COUNT(NAME) FROM Trip__c WHERE Contact__c =: contactId WITH SECURITY_ENFORCED];
             return tripList;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());

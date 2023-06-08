@@ -1,6 +1,6 @@
 import { LightningElement, api, wire } from 'lwc';
 import getSelectedContact from '@salesforce/apex/GetContactHandler.getSelectedContact';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { showMessage } from 'c/serviceComponent';
 
 
 export default class ContactInfo extends LightningElement {
@@ -57,24 +57,11 @@ export default class ContactInfo extends LightningElement {
         this.getfulladdress();
         this.toggleViewAndEdit = true;
         this.editRightSection = false;
-        const event = new ShowToastEvent({
-            title: 'Success',
-            message: 'Record Updated sucessfully',
-            variant: 'success',
-            mode: 'dismissable'
-        });
-        this.dispatchEvent(event);
+        showMessage(this , 'Record Updated Successfully' , 'Success message' , 'success');
     }
 
     // function to handle errors 
     handleError(event) {
-        const toast = new ShowToastEvent({
-            title: 'Error!',
-            message: event.detail.detail,
-            variant: 'Error',
-            mode: 'dismissable'
-        });
-        this.dispatchEvent(toast);
+        showMessage(this , event.detail.detail , 'Error message' , 'Error');
     }
-
 }

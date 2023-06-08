@@ -44,7 +44,8 @@
                 <!-- related trip's information in table  -->
                 <template lwc:if={showdata}>
                     <template for:each={tripData} for:item="trip">
-                        <tr class="slds-hint-parent" key={trip.Id} onclick={showData} style="cursor: pointer;">
+                        <tr class="slds-hint-parent" key={trip.Id} onclick={showData} data-text={trip.Id} style
+                        ="cursor: pointer;">
                             <td data-text={trip.Id}>
                                 <div class="slds-truncate" title={trip.Trip_Date__c} data-text={trip.Id}>
                                     <lightning-formatted-text value={trip.Trip_Date__c}

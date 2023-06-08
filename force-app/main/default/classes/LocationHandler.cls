@@ -3,7 +3,6 @@ public with sharing class LocationHandler {
     @AuraEnabled
     public static String createLocation(String locationName , Map<String,Object> addressMap , Id contactId){
         try {
-            System.debug(contactId);
             Location__c l1 = new Location__c();
             l1.Name = locationName;
             l1.Address__Street__s = (String)addressMap.get('street');
@@ -12,6 +11,7 @@ public with sharing class LocationHandler {
             l1.Address__StateCode__s = (String)addressMap.get('province');
             l1.Address__PostalCode__s = (String)addressMap.get('postalCode');
             l1.Contact__c = contactId;
+
             insert l1;
 
             return l1.Id;
@@ -33,7 +33,6 @@ public with sharing class LocationHandler {
     @AuraEnabled
     public static String editLocation(String locationName , Map<String,Object> addressMap , Id locationId){
         try {
-            System.debug(locationId);
             Location__c l1 = new Location__c();
             l1.Id = locationId;
             l1.Name = locationName;

@@ -2,7 +2,7 @@ import { LightningElement,wire,api ,track} from 'lwc';
 import createLocation from '@salesforce/apex/LocationHandler.createLocation';
 import editLocation from '@salesforce/apex/LocationHandler.editLocation';
 import getLocationDataToEdit from '@salesforce/apex/LocationHandler.getLocationDataToEdit';
-import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { showMessage } from 'c/serviceComponent';
 
 export default class LocationModal extends LightningElement {
     @api locationId;
@@ -47,6 +47,7 @@ export default class LocationModal extends LightningElement {
         this.dispatchEvent(event);
     }
 
+
     handleCreateRecord() {
         let allowCreation = true;
         if(this.address != ''){
@@ -54,25 +55,13 @@ export default class LocationModal extends LightningElement {
             let postalCode = this.address.postalCode;
             if(!postalCode.match(regex)){
                 allowCreation = false;
-                const e = new ShowToastEvent({
-                    title: 'Error message',
-                    message: 'Please Enter Valid 6 Digit Postal Code Ex: 123456',
-                    variant: 'Error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(e);
+                showMessage(this , 'Please Enter Valid 6 Digit Postal Code Ex: 123456.' , 'Error message' , 'Error');
             }
         }
         if(allowCreation){
             createLocation({ locationName: this.locationName , addressMap: this.address , contactId: this.contactId})
             .then(result => {
-                const e = new ShowToastEvent({
-                    title: 'Success message',
-                    message: 'Trip Created Successfully',
-                variant: 'success',
-                mode: 'dismissable'
-            });
-            this.dispatchEvent(e);
+            showMessage(this , 'Location Created Successfully' , 'Success message' , 'success');
             this.closeModal();
             this.locationId = result;
             const event = new CustomEvent('locationcreation', {
@@ -85,13 +74,7 @@ export default class LocationModal extends LightningElement {
             })
             .catch(error => {
                 console.log('Error:', error);
-                const e = new ShowToastEvent({
-                    title: 'Error message',
-                    message: 'State/Country Code is NOT AVAILABLE. Please Provide Correct State/Country Code. Ex: IN for India',
-                    variant: 'Error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(e);
+                showMessage(this , 'State/Country Code is NOT AVAILABLE. Please Provide Correct State/Country Code. Ex: IN for India' , 'Error message' , 'Error');
             });
         }
     }
@@ -103,25 +86,13 @@ export default class LocationModal extends LightningElement {
             let postalCode = this.address.postalCode;
             if(!postalCode.match(regex)){
                 allowEdit = false;
-                const e = new ShowToastEvent({
-                    title: 'Error message',
-                    message: 'Please Enter Valid 6 Digit Postal Code Ex: 123456',
-                    variant: 'Error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(e);
+                showMessage(this , 'Please Enter Valid 6 Digit Postal Code Ex: 123456.' , 'Error message' , 'Error');
             }
         }
         if(allowEdit){
         editLocation({ locationName: this.locationName , addressMap: this.address , locationId: this.locationId})
         .then(result => {
-            const e = new ShowToastEvent({
-                title: 'Success message',
-                message: 'Trip Updated Successfully',
-                variant: 'success',
-                mode: 'dismissable'
-            });
-            this.dispatchEvent(e);
+            showMessage(this , 'Location Updated Successfully' , 'Success message' , 'success');
             this.closeModal();
             const event = new CustomEvent('locationupdate', {
                 detail: {
@@ -133,13 +104,7 @@ export default class LocationModal extends LightningElement {
             })
             .catch(error => {
                 console.log('Error:', error);
-                const e = new ShowToastEvent({
-                    title: 'Error message',
-                    message: 'State/Country Code is NOT AVAILABLE. Please Provide Correct State/Country Code.',
-                    variant: 'Error',
-                    mode: 'dismissable'
-                });
-                this.dispatchEvent(e);
+                showMessage(this , 'State/Country Code is NOT AVAILABLE. Please Provide Correct State/Country Code. Ex: IN for India' , 'Error message' , 'Error');
             });
         }
     }
